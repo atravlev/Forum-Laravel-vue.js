@@ -8,26 +8,27 @@
 
         data() {
             return {
-                buttonText: 'Subscribe'
+                hasSubscription: this.active
             }
         },
 
         computed: {
             classes() {
-                return ['btn', this.active ? 'btn-primary' : 'btn-default'];
+                return ['btn', this.hasSubscription ? 'btn-primary' : 'btn-default'];
             },
 
+            buttonText() {
+                return this.hasSubscription ? 'Unsubscribed' : 'Subscribe'
+            }
         },
 
         methods: {
             subscribe() {
-                let requestType = this.active ? 'delete' : 'post';
+                let requestType = this.hasSubscription ? 'delete' : 'post';
 
                 axios[requestType](location.pathname + '/subscriptions');
 
-                this.active = ! this.active;
-
-                this.buttonText = this.active ? 'Unsubscribed' : 'Subscribe';
+                this.hasSubscription = ! this.hasSubscription;
             }
         }
     }
