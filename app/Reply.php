@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
@@ -63,6 +64,28 @@ class Reply extends Model
     public function thread()
     {
         return $this->belongsTo(Thread::class);
+    }
+
+    /**
+     * Determine if the reply was just published a moment ago.
+     *
+     * @return bool
+     */
+    public function wasJustPublished()
+    {
+        return $this->created_at->gt(Carbon::now()->subMinute());
+    }
+
+    /**
+    * Fetch all mentioned users within the reply's body.
+    *
+    * @return array
+    */
+    public function mentionedUsers()
+    {
+        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+
+        return $matches[1];
     }
 
     /**

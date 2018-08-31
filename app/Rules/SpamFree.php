@@ -22,4 +22,9 @@ class SpamFree implements Rule
             return false;
         }
     }
+
+    public function message()
+    {
+        return '';
+    }
 }
