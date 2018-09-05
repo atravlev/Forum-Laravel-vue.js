@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class ThreadsController extends Controller
 {
     /**
-     * ThreadsController constructor.
+     * Create a new ThreadsController instance.
      */
     public function __construct()
     {
@@ -21,8 +21,8 @@ class ThreadsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Channel      $channel
-     * @param ThreadFilters $filters
+     * @param  Channel       $channel
+     * @param  ThreadFilters $filters
      * @return \Illuminate\Http\Response
      */
     public function index(Channel $channel, ThreadFilters $filters)
@@ -55,7 +55,7 @@ class ThreadsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'title' => 'required|spamfree',
             'body' => 'required|spamfree',
             'channel_id' => 'required|exists:channels,id'
@@ -122,6 +122,6 @@ class ThreadsController extends Controller
             $threads->where('channel_id', $channel->id);
         }
 
-        return $threads->get();
+        return $threads->paginate(25);
     }
 }

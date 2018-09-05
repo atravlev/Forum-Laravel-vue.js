@@ -14,13 +14,16 @@
         </div>
         <div class="card-body">
             <div v-if="editing">
-                <div class="form-group">
-                    <textarea class="form-control" v-model="body"></textarea>
-                </div>
-                <button class="btn btn-sm btn-primary" @click="update">Update</button>
-                <button class="btn btn-sm btn-link" @click="editing = false">Cancel</button>
+                <form @submit="update">
+                    <div class="form-group">
+                    <textarea class="form-control" v-model="body" required></textarea>
+                    </div>
+                    <button class="btn btn-sm btn-primary">Update</button>
+                    <button type="button" class="btn btn-sm btn-link" @click="editing = false">Cancel</button>
+                </form>
+                
             </div>
-            <div v-else v-text="body"></div>
+            <div v-else v-html="body"></div>
         </div>
         <div class="card-footer level" v-if="canUpdate">
             <button class="btn btn-sm" @click="editing = true">Edit</button>
@@ -28,7 +31,6 @@
         </div>
     </div>
 </template>
-
 
 <script>
     import Favorite from './Favorite.vue';
