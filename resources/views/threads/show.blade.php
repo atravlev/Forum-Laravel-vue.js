@@ -13,12 +13,13 @@
                         <div class="card-header">
                             <div class="level">
                                 <span>
+                                    <img class="mr-1" src="{{ asset($thread->creator->avatar_path) }}" width="50" height="50">
                                     <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a> posted:
                                 {{ $thread->title }} 
                                 </span>  
                                 @can ('update', $thread)
                                     <form action="{{ $thread->path() }}" method="POST">
-                                        {{ csrf_field() }}
+                                        @csrf
                                         {{ method_field('DELETE') }}
 
                                         <button type="submit" class="btn btn-link">Delete Thread</button>

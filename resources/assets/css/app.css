@@ -8,6 +8,10 @@
     margin-bottom: 30px;
 }
 
+.flex {
+    display: flex;
+}
+
 [v-cloak] {
     display: none;
 }
