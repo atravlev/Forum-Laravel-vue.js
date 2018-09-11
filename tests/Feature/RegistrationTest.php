@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Mail\PleaseConfirmYourEmail;
 use App\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
@@ -18,15 +17,22 @@ class RegistrationTest extends TestCase
     {
         Mail::fake();
         
-        event(new Registered(create('App\User')));
+        $this->post(route('register'), [
+            'name' => 'John',
+            'email' => 'johndoe@example.com',
+            'password' => 'foobar123',
+            'password_confirmation' => 'foobar123'
+        ]);
 
-        Mail::assertSent(PleaseConfirmYourEmail::class);
+        Mail::assertQueued(PleaseConfirmYourEmail::class);
     }
 
     /** @test */
     public function user_can_fully_confirm_their_email_addresses()
     {
-        $this->post('/register', [
+        Mail::fake();
+
+        $this->post(route('register'), [
             'name' => 'John',
             'email' => 'johndoe@example.com',
             'password' => 'foobar123',
@@ -39,10 +45,20 @@ class RegistrationTest extends TestCase
 
         $this->assertNotNull($user->confirmation_token);
 
-        $response = $this->get('/register/confirm?token='. $user->confirmation_token);
+        $this->get(route('register.confirm', ['token' => $user->confirmation_token]))
+            ->assertRedirect(route('threads'));
+            
+        tap($user->fresh(), function ($user) {
+            $this->assertTrue($user->confirmed);
+            $this->assertNull($user->confirmation_token);
+        });
+    }
 
-        $this->assertTrue($user->fresh()->confirmed);
-
-        $response->assertRedirect('/threads');
+    /** @test */
+    public function confirming_an_invalid_token()
+    {
+        $this->get(route('register.confirm', ['token' => 'invalid']))
+            ->assertRedirect(route('threads'))
+            ->assertSessionHas('flash', 'Unknown token.');
     }
 }

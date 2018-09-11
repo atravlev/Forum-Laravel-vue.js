@@ -7,19 +7,21 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PleaseConfirmYourEmail extends Mailable
+class PleaseConfirmYourEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     /**
-     * @var App/User
+     * The user associated with the email.
+     *
+     * @var \App\User
      */
     public $user;
 
     /**
-     * Create a new message instance
+     * Create a new mailable instance.
      *
-     * @param $user
+     * @param \App\User $user
      */
     public function __construct($user)
     {
@@ -27,10 +29,10 @@ class PleaseConfirmYourEmail extends Mailable
     }
 
     /**
-     * Build the message.
-     *
-     * @return $this
-     */
+    * Build the email.
+    *
+    * @return $this
+    */
     public function build()
     {
         return $this->markdown('emails.confirm');
