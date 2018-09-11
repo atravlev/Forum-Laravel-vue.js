@@ -175,6 +175,11 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
+    /**
+     * Make new instance of Visits associated by thread
+     *
+     * @return App\Visit
+     */
     public function visits()
     {
         return new Visits($this);
