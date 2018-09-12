@@ -13,7 +13,8 @@ class InvalidKeywords implements iSpam
      * @var array
      */
     protected $keywords = [
-        'yahoo customer support'
+        'yahoo customer support',
+        'fuck'
     ];
 
     /**

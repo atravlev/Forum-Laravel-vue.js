@@ -22,3 +22,7 @@
 [v-cloak] {
     display: none;
 }
+
+.card-success {
+    background-color: #98fb98;
+}

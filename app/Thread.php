@@ -118,6 +118,14 @@ class Thread extends Model
     }
 
     /**
+     * Lock the thread
+     */
+    public function lock()
+    {
+        $this->update(['locked' => true]);
+    }
+
+    /**
      * Apply all relevant thread filters.
      *
      * @param  Builder       $query
@@ -192,7 +200,7 @@ class Thread extends Model
     }
 
     /**
-     * Make new instance of Visits associated by thread
+     * Make new instance of Visits associated by the thread
      *
      * @return App\Visit
      */
@@ -201,6 +209,11 @@ class Thread extends Model
         return new Visits($this);
     }
 
+    /**
+     * Set the proper slug attribute.
+     *
+     * @param string $value
+     */
     public function setSlugAttribute($value)
     {
         $slug = str_slug($value);
@@ -210,5 +223,15 @@ class Thread extends Model
         }
 
         $this->attributes['slug'] = $slug;
+    }
+
+    /**
+     * Mark the given reply as the best answer.
+     *
+     * @param Reply $reply
+     */
+    public function markBestReply(Reply $reply)
+    {
+        $this->update(['best_reply_id' => $reply->id]);
     }
 }
