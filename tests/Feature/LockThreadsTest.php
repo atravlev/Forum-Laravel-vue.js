@@ -20,7 +20,7 @@ class LockThreadsTest extends TestCase
             'locked' => true
         ])->assertStatus(302);
 
-        $this->assertFalse(!! $thread->fresh()->locked);
+        $this->assertFalse($thread->fresh()->locked);
     }
 
     /** @test */
@@ -34,7 +34,20 @@ class LockThreadsTest extends TestCase
             'locked' => true
         ]);
 
-        $this->assertTrue(!! $thread->fresh()->locked);
+        $this->assertTrue($thread->fresh()->locked);
+    }
+
+
+    /** @test */
+    public function an_admin_can_unlock_threads()
+    {
+        $this->signIn(factory('App\User')->states('administrator')->create());
+
+        $thread = create('App\Thread', ['user_id' => auth()->id(), 'locked' => true]);
+
+        $this->delete(route('locked-threads.destroy', $thread));
+
+        $this->assertFalse($thread->fresh()->locked);
     }
 
 

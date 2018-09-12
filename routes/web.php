@@ -32,6 +32,7 @@ Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsCon
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy');
 
 Route::post('locked-threads/{thread}', 'LockedThreadsController@store')->name('locked-threads.store')->middleware('admin');
+Route::delete('locked-threads/{thread}', 'LockedThreadsController@destroy')->name('locked-threads.destroy')->middleware('admin');
 
 Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.destroy');
 Route::patch('/replies/{reply}', 'RepliesController@update');
