@@ -19,3 +19,13 @@
 .card-success {
     background-color: #98fb98;
 }
+
+.ais-highlight > em {
+    background-color: yellow;
+    font-style: normal;
+}
+
+.search-wrapper {
+    display: flex;
+    justify-content: space-around;
+}

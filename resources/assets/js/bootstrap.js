@@ -3,6 +3,8 @@ window._ = require('lodash');
 window.Popper = require('popper.js').default;
 window.Vue = require('vue');
 
+import InstantSearch from 'vue-instantsearch';
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -40,6 +42,8 @@ if (token) {
 }
 
 window.events = new Vue();
+
+Vue.use(InstantSearch);
 
 window.flash = function (message, level = 'success') {
     window.events.$emit('flash', { message, level });
