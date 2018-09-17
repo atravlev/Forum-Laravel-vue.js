@@ -1,7 +1,7 @@
 <script>
     import Replies from '../components/Replies.vue';
     import SubscribeButton from '../components/SubscribeButton.vue';
-    
+    import Trix from 'trix';
     export default {
         props: ['thread', 'dataLocked'],
 

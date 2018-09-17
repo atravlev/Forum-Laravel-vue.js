@@ -16,6 +16,7 @@
     import Reply from './Reply.vue';
     import NewReply from './NewReply.vue';
     import collection from '../mixins/collection';
+    import Trix from 'trix';
 
     export default {
         components: { Reply, NewReply },

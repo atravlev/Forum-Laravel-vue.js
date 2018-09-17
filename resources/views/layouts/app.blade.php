@@ -22,6 +22,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.1/trix.css">
     @yield('header')
 </head>
 <body>
